@@ -1,7 +1,6 @@
 
 require.paths.unshift('spec', './spec/lib', 'lib')
 require('jspec')
-require('unit/spec.helper')
 recorderMock = require('recorderMock').recorderMock
 
 JSpec

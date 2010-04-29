@@ -2,12 +2,11 @@
 	<head>
 		<script src="/jspec/jspec.js"></script>
 		<script src="/jspec/jspec.xhr.js"></script>
-		<script src="/lib/yourlib.js"></script>
-		<script src="/spec/unit/spec.helper.js"></script>
+		<script src="/lib/recorderMock.js"></script>
 		<script>
 			function runSuites() {
 				JSpec
-				.exec('unit/spec.js')
+				.exec('unit/spec.recorderMock.js')
 				.run({ reporter: JSpec.reporters.Server, verbose: true, failuresOnly: true, fixturePath: '/spec/fixtures' })
 				.report()
 			}
