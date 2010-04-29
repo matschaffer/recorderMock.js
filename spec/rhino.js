@@ -5,6 +5,6 @@ load('lib/recorderMock.js')
 load('spec/unit/spec.helper.js')
 
 JSpec
-.exec('spec/unit/spec.recorderMock.js')
-.run({ reporter: JSpec.reporters.Terminal, fixturePath: 'spec/fixtures' })
-.report()
+  .exec('spec/unit/spec.recorderMock.js')
+  .run({ reporter: JSpec.reporters.Terminal, fixturePath: 'spec/fixtures', failuresOnly: true })
+  .report()
