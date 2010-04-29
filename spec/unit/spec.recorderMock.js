@@ -60,7 +60,8 @@ JSpec.describe('Recorder mock', function () {
   });
 
   it("can chain calls", function () {
-    recorder.foo().bar();
+    recorder().foo().bar();
+    expect(recorder.__calls).not_to(be_empty);
     expect(recorder.foo.__calls).not_to(be_empty);
     expect(recorder.bar.__calls).not_to(be_empty);
   });
