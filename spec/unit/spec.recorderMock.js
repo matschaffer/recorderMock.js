@@ -58,4 +58,17 @@ JSpec.describe('Recorder mock', function () {
     recorder.foo();
     expect(recorder.foo.calls).not_to(be_empty);
   });
+
+  it("can chain calls", function () {
+    recorder.foo().bar();
+    expect(recorder.foo.__calls).not_to(be_empty);
+    expect(recorder.bar.__calls).not_to(be_empty);
+  });
+
+  it("can append new calls", function () {
+    expect(function () { recorder.baz(); }).to(throw_error);
+    recorder.__addCalls("baz");
+    recorder.baz();
+    expect(recorder.baz.__calls).not_to(be_empty);
+  });
 });
