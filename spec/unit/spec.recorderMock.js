@@ -72,4 +72,29 @@ JSpec.describe('Recorder mock', function () {
     recorder.baz();
     expect(recorder.baz.__calls).not_to(be_empty);
   });
+
+  it("can optionally attach logic to members based on previous calls", function () {
+    var $ = recorderMock("height", "width");
+    $.height.__returns = function () {
+      return { 'some#big.selector':   100,
+               'some#small.selector': 10 }[$.__lastCall.arguments];
+    };
+    expect($('some#big.selector').height()).to(eql, 100);
+    expect($('some#small.selector').height()).to(eql, 10);
+  });
+
+  it("should pass call details and recorder to __returns function to enable inspection and chaining", function () {
+    var $ = recorderMock("find", "attr");
+
+    $.find.__returns = function (call, recorder) {
+      return recorder;
+    };
+
+    $.attr.__returns = function (call) {
+      return { class: 'selector', id: 'id' }[call.arguments[0]];
+    };
+
+    expect($.find("some.selector").attr('class')).to(eql, 'selector');
+    expect($.find("some.selector").attr('id')).to(eql, 'id');
+  });
 });
