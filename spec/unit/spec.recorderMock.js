@@ -91,10 +91,27 @@ JSpec.describe('Recorder mock', function () {
     };
 
     $.attr.__returns = function (call) {
-      return { class: 'selector', id: 'id' }[call.arguments[0]];
+      return { "class": 'selector', id: 'id' }[call.arguments[0]];
     };
 
     expect($.find("some.selector").attr('class')).to(eql, 'selector');
     expect($.find("some.selector").attr('id')).to(eql, 'id');
+  });
+
+  it("should consider direct calls on the return to be root calls", function () {
+    recorder.foo()();
+    expect(recorder.__calls.length).to(eql, 1);
+    expect(recorder.foo.__calls.length).to(eql, 1);
+  });
+
+  it("should keep track of the call chain", function () {
+    var root1 = recorder("root 1"),
+        root2 = recorder("root 2");
+
+    root2.foo("foo 2");
+    root1.foo("foo 1");
+
+    expect(recorder.foo.__calls[0].previous.arguments).to(eql, ["root 2"]);
+    expect(recorder.foo.__calls[1].previous.arguments).to(eql, ["root 1"]);
   });
 });
