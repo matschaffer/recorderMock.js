@@ -84,24 +84,10 @@ JSpec.describe('Recorder mock', function () {
     expect($('some#small.selector').height()).to(eql, 10);
   });
 
-  it("should pass call details and recorder to __returns function to enable inspection and chaining", function () {
-    var $ = recorderMock("find", "attr");
-
-    $.find.__process(function (call, recorder) {
-      return recorder;
-    });
-
-    $.attr.__process(function (call) {
-      return { "class": 'selector', id: 'id' }[call.arguments[0]];
-    });
-
-    expect($.find("some.selector").attr('class')).to(eql, 'selector');
-    expect($.find("some.selector").attr('id')).to(eql, 'id');
-  });
-
   it("should consider direct calls on the return to be root calls", function () {
-    recorder.foo()();
+    recorder.foo()("direct");
     expect(recorder.__calls.length).to(eql, 1);
+    expect(recorder.__calls.last.arguments).to(eql, ["direct"]);
     expect(recorder.foo.__calls.length).to(eql, 1);
   });
 
@@ -114,5 +100,21 @@ JSpec.describe('Recorder mock', function () {
 
     expect(recorder.foo.__calls[0].previous.arguments).to(eql, ["root 2"]);
     expect(recorder.foo.__calls[1].previous.arguments).to(eql, ["root 1"]);
+  });
+
+  it("should allow for chained processing and inspection", function () {
+    var $ = recorderMock("find", "attr");
+
+    $.find.__process(function (call, recorder) {
+      return recorder;
+    });
+
+    $.attr.__process(function (call) {
+      return { ".title":  "title",
+               ".avatar": "avatar" }[call.previous.arguments[0]];
+    });
+
+    expect($.find(".title").attr('class')).to(eql, 'title');
+    expect($.find(".avatar").attr('class')).to(eql, 'avatar');
   });
 });
