@@ -46,11 +46,12 @@ JSpec.describe('Recorder mock', function () {
     expect(recorder.bar.__calls).to(be_empty);
   });
 
-  it("should mimic signature of object if given", function () {
-    recorder = recorderMock({baz: 0, qux: 1});
-    recorder.qux();
-    expect(recorder.qux.__calls).not_to(be_empty);
-  });
+  // Not sure how useful this feature is, leaving it out for now
+  //it("should mimic signature of object if given", function () {
+  //  recorder = recorderMock({baz: 0, qux: 1});
+  //  recorder.qux();
+  //  expect(recorder.qux.__calls).not_to(be_empty);
+  //});
 
   it("can use other special method prefixes if needed", function () {
     recorderMock.prefix = "";
