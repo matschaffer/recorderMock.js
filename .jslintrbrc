@@ -1,0 +1,15 @@
+{ 
+  "white":    false,
+  "onevar":   true,
+  "undef":    true,
+  "nomen":    false,
+  "eqeqeq":   true,
+  "plusplus": false,
+  "bitwise":  true,
+  "regexp":   true,
+  "strict":   false,
+  "newcap":   true,
+  "immed":    true,
+  "indent":   2,
+  "predef":   [ "exports" ]
+}
