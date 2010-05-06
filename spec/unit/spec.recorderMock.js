@@ -21,7 +21,7 @@ JSpec.describe('Recorder mock', function () {
     expect(recorder.foo.__calls[0].arguments).to(eql, ["some", "arguments"]);
   });
 
-  it("should record calls to as a function", function () {
+  it("should record calls made directly to mock function", function () {
     recorder("some", "arguments");
     expect(recorder.__calls.length).to(eql, 1);
     expect(recorder.__calls[0].arguments).to(eql, ["some", "arguments"]);
@@ -37,13 +37,13 @@ JSpec.describe('Recorder mock', function () {
   });
 
   it("should clear calls to all member functions", function () {
+    recorder();
     recorder.foo();
-    recorder.bar();
+    expect(recorder.__calls).not_to(be_empty);
     expect(recorder.foo.__calls).not_to(be_empty);
-    expect(recorder.bar.__calls).not_to(be_empty);
     recorder.__clearAll();
+    expect(recorder.__calls).to(be_empty);
     expect(recorder.foo.__calls).to(be_empty);
-    expect(recorder.bar.__calls).to(be_empty);
   });
 
   it("should mimic signature of object if given", function () {
@@ -52,7 +52,7 @@ JSpec.describe('Recorder mock', function () {
     expect(recorder.qux.__calls).not_to(be_empty);
   });
 
-  it("can use other special method prefixes if needed", function () {
+  it("can use other custom special method prefixes", function () {
     recorderMock.prefix = "";
     recorder = recorderMock("foo");
     recorder.foo();
@@ -68,9 +68,11 @@ JSpec.describe('Recorder mock', function () {
 
   it("can append new calls", function () {
     expect(function () { recorder.baz(); }).to(throw_error);
-    recorder.__addCalls("baz");
+    recorder.__addCalls("baz", "qux");
     recorder.baz();
+    recorder.qux();
     expect(recorder.baz.__calls).not_to(be_empty);
+    expect(recorder.qux.__calls).not_to(be_empty);
   });
 
   it("can optionally attach logic to members based on previous calls", function () {
