@@ -77,7 +77,7 @@ JSpec.describe('Recorder mock', function () {
 
   it("can optionally attach logic to members based on previous calls", function () {
     var $ = recorderMock("height", "width");
-    $.height.__process(function () {
+    $.height.__returns(function () {
       return { 'some#big.selector':   100,
                'some#small.selector': 10 }[$.__calls.last.arguments];
     });
@@ -106,11 +106,11 @@ JSpec.describe('Recorder mock', function () {
   it("should allow for chained processing and inspection", function () {
     var $ = recorderMock("find", "attr");
 
-    $.find.__process(function (call, recorder) {
+    $.find.__returns(function (call, recorder) {
       return recorder;
     });
 
-    $.attr.__process(function (call) {
+    $.attr.__returns(function (call) {
       return { ".title":  "title",
                ".avatar": "avatar" }[call.previous.arguments[0]];
     });
