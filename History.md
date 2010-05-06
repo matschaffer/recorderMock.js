@@ -13,3 +13,8 @@ Led to these API changes:
 
 * Changed `.__lastCall` to `.__call.last`
 * Changed `.__returns = fn` to `.__process(fn)`
+
+0.3.0 / 2010-05-06
+------------------
+
+* Switched `__process` back to `__returns` after being convinced that it was more in line with other mocking frameworks.
