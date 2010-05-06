@@ -1,5 +1,5 @@
-
-# recorderMock.js
+recorderMock.js
+===============
 
 recorderMock.js is a helper library for creating mock objects that
 silently receive and record any call that they're configured for.
@@ -9,7 +9,8 @@ with browser APIs (e.g., jQuery, Raphaël). Doing this with standard
 mocking tools tends to lead to a lot of extra setup code, whereas
 recorderMock.js often only requires a single line.
 
-## Usage
+Usage
+-----
 
 To build a mock object, just call the `recorderMock` function with
 all the functions you want to mock:
@@ -31,12 +32,14 @@ You can also call the mock directly which is useful with some libraries:
     myMock("another arg")
     myMock.__calls        // => [{arguments: ["another arg"]}]
 
-## Compatibility
+Compatibility
+-------------
 
 The tests are currently running in-browser, rhino, and node.js, so it should
 work pretty much anywhere. Let me know if you find otherwise.
 
-## License 
+License
+-------
 
 (The MIT License)
 
